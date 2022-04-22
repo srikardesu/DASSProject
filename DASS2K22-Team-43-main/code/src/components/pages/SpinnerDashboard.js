@@ -116,8 +116,10 @@ const UsersList = (props, onCancel) => {
         setOpen(v);
     };
 
-    function handleClickOpen2(x) {
+    function handleClickOpen2() {
+        console.log('hi');
         setOpen2(true);
+        console.log('ye');
     };
 
     function handleClose(x) {
@@ -473,132 +475,136 @@ const UsersList = (props, onCancel) => {
                                                     <Button onClick={() => handleEditClose(user._id)}>OK</Button>
                                                 </DialogActions>
                                             </Dialog>
-                                            <Dialog open={open2} onClose={() => handleClose2()}>
-                                                <DialogTitle>Add Stock</DialogTitle>
-                                                <DialogContent>
-                                                    {/* <DialogContentText>
-                                        To subscribe to this website, please enter your email address here. We
-                                        will send updates occasionally.
-                                    </DialogContentText> */}
-                                                    <TextField
-                                                        autoFocus
-                                                        margin="dense"
-                                                        id="name"
-                                                        label="Count Number"
-                                                        type="text"
-                                                        // value={el.Vendor_email}
-                                                        onChange={onChangecountNumber}
-                                                        fullWidth
-                                                        variant="standard"
-                                                    />
-                                                    <TextField
-                                                        autoFocus
-                                                        margin="dense"
-                                                        id="name"
-                                                        label="twist Number"
-                                                        type="text"
-                                                        // value={el.Vendor_email}
-                                                        onChange={onChangetwistNumber}
-                                                        fullWidth
-                                                        variant="standard"
-                                                    />
-                                                    <TextField
-                                                        autoFocus
-                                                        margin="dense"
-                                                        id="name"
-                                                        label="spin Date"
-                                                        type="text"
-                                                        // value={el.Vendor_email}
-                                                        onChange={onChangespinDate}
-                                                        fullWidth
-                                                        variant="standard"
-                                                    />
-                                                    <TextField
-                                                        autoFocus
-                                                        margin="dense"
-                                                        id="name"
-                                                        label="cotton Origin"
-                                                        type="text"
-                                                        // value={el.Vendor_email}
-                                                        onChange={onChangecottonOrigin}
-                                                        fullWidth
-                                                        variant="standard"
-                                                    />
-                                                    <TextField
-                                                        autoFocus
-                                                        margin="dense"
-                                                        id="name"
-                                                        label="yarn Type"
-                                                        type="text"
-                                                        // value={el.Vendor_email}
-                                                        onChange={onChangeyarnType}
-                                                        fullWidth
-                                                        variant="standard"
-                                                    />
-                                                    <TextField
-                                                        autoFocus
-                                                        margin="dense"
-                                                        id="name"
-                                                        label="dyer ID"
-                                                        type="text"
-                                                        // value={el.Vendor_email}
-                                                        onChange={onChangedyerID}
-                                                        fullWidth
-                                                        variant="standard"
-                                                    />
-                                                    <TextField
-                                                        autoFocus
-                                                        margin="dense"
-                                                        id="name"
-                                                        label="dyeing Date"
-                                                        type="text"
-                                                        // value={el.Vendor_email}
-                                                        onChange={onChangedyeingDate}
-                                                        fullWidth
-                                                        variant="standard"
-                                                    />
-                                                    <TextField
-                                                        autoFocus
-                                                        margin="dense"
-                                                        id="name"
-                                                        label="colours"
-                                                        type="email"
-                                                        // value={el.Vendor_email}
-                                                        onChange={onChangecolours}
-                                                        fullWidth
-                                                        variant="standard"
-                                                    />
-                                                    <TextField
-                                                        autoFocus
-                                                        margin="dense"
-                                                        id="name"
-                                                        label="special Treatment"
-                                                        type="email"
-                                                        // value={el.Vendor_email}
-                                                        onChange={onChangespecialTreatment}
-                                                        fullWidth
-                                                        variant="standard"
-                                                    />
-                                                    <TextField
-                                                        autoFocus
-                                                        margin="dense"
-                                                        id="name"
-                                                        label="current Status"
-                                                        type="email"
-                                                        // value={el.Vendor_email}
-                                                        onChange={onChangecurrentStatus}
-                                                        fullWidth
-                                                        variant="standard"
-                                                    />
-                                                </DialogContent>
-                                                <DialogActions>
-                                                    <Button onClick={() => handleClose2()}>Cancel</Button>
-                                                    <Button onClick={() => handleEditClose2()}>OK</Button>
-                                                </DialogActions>
-                                            </Dialog>
                                         </TableCell>
                                     </TableRow>
                                 ))}
+                                <TableRow>
+                                    <TableCell>
+                                        <Dialog open={open2} onClose={handleClose2}>
+                                            <DialogTitle>Add Stock</DialogTitle>
+                                            <DialogContent>
+                                                {/* <DialogContentText>
+                                        To subscribe to this website, please enter your email address here. We
+                                        will send updates occasionally.
+                                    </DialogContentText> */}
+                                                <TextField
+                                                    autoFocus
+                                                    margin="dense"
+                                                    id="name"
+                                                    label="Count Number"
+                                                    type="text"
+                                                    // value={el.Vendor_email}
+                                                    onChange={onChangecountNumber}
+                                                    fullWidth
+                                                    variant="standard"
+                                                />
+                                                <TextField
+                                                    autoFocus
+                                                    margin="dense"
+                                                    id="name"
+                                                    label="twist Number"
+                                                    type="text"
+                                                    // value={el.Vendor_email}
+                                                    onChange={onChangetwistNumber}
+                                                    fullWidth
+                                                    variant="standard"
+                                                />
+                                                <TextField
+                                                    autoFocus
+                                                    margin="dense"
+                                                    id="name"
+                                                    label="spin Date"
+                                                    type="text"
+                                                    // value={el.Vendor_email}
+                                                    onChange={onChangespinDate}
+                                                    fullWidth
+                                                    variant="standard"
+                                                />
+                                                <TextField
+                                                    autoFocus
+                                                    margin="dense"
+                                                    id="name"
+                                                    label="cotton Origin"
+                                                    type="text"
+                                                    // value={el.Vendor_email}
+                                                    onChange={onChangecottonOrigin}
+                                                    fullWidth
+                                                    variant="standard"
+                                                />
+                                                <TextField
+                                                    autoFocus
+                                                    margin="dense"
+                                                    id="name"
+                                                    label="yarn Type"
+                                                    type="text"
+                                                    // value={el.Vendor_email}
+                                                    onChange={onChangeyarnType}
+                                                    fullWidth
+                                                    variant="standard"
+                                                />
+                                                <TextField
+                                                    autoFocus
+                                                    margin="dense"
+                                                    id="name"
+                                                    label="dyer ID"
+                                                    type="text"
+                                                    // value={el.Vendor_email}
+                                                    onChange={onChangedyerID}
+                                                    fullWidth
+                                                    variant="standard"
+                                                />
+                                                <TextField
+                                                    autoFocus
+                                                    margin="dense"
+                                                    id="name"
+                                                    label="dyeing Date"
+                                                    type="text"
+                                                    // value={el.Vendor_email}
+                                                    onChange={onChangedyeingDate}
+                                                    fullWidth
+                                                    variant="standard"
+                                                />
+                                                <TextField
+                                                    autoFocus
+                                                    margin="dense"
+                                                    id="name"
+                                                    label="colours"
+                                                    type="email"
+                                                    // value={el.Vendor_email}
+                                                    onChange={onChangecolours}
+                                                    fullWidth
+                                                    variant="standard"
+                                                />
+                                                <TextField
+                                                    autoFocus
+                                                    margin="dense"
+                                                    id="name"
+                                                    label="special Treatment"
+                                                    type="email"
+                                                    // value={el.Vendor_email}
+                                                    onChange={onChangespecialTreatment}
+                                                    fullWidth
+                                                    variant="standard"
+                                                />
+                                                <TextField
+                                                    autoFocus
+                                                    margin="dense"
+                                                    id="name"
+                                                    label="current Status"
+                                                    type="email"
+                                                    // value={el.Vendor_email}
+                                                    onChange={onChangecurrentStatus}
+                                                    fullWidth
+                                                    variant="standard"
+                                                />
+                                            </DialogContent>
+                                            <DialogActions>
+                                                <Button onClick={() => handleClose2()}>Cancel</Button>
+                                                <Button onClick={() => handleEditClose2()}>OK</Button>
+                                            </DialogActions>
+                                        </Dialog>
+                                    </TableCell>
+                                </TableRow>
                             </TableBody>
                         </Table>
                     </Paper>
