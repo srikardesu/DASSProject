@@ -1,0 +1,2 @@
+1. Do we need to also maintain record of the raw materials which the spinner gets? Or is it enough to just have a field about some dets about the raw cotton (like source, quality, etc) in the yarnPackage.
+2. Raw materials of the processes do we need to track? like for dyeing process, the colours and all.
