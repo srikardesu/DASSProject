@@ -10,6 +10,9 @@ import './Profile.css'
 export default function WeaverProfile() {
     const [UserData, SetUserData] = useState("");
     // let UserEmail = localStorage.getItem('emailID');
+    const handleClick = () => {
+        window.location.href = "/weaver_edit_profile";
+    }
 
     useEffect(() => {
         console.log(localStorage.getItem("id"));
@@ -65,7 +68,7 @@ export default function WeaverProfile() {
         <div className='box-shadow'>
             {/* <WeaverNav /> */}
             <div id="welcome-message">
-                Hello Customer {getName()}!
+                Hello {getName()}!!
             </div>
             <br />
             <div id="details">
@@ -85,10 +88,9 @@ export default function WeaverProfile() {
                 <br />
             </div>
             <br />
-            {/* <Link to="/"> <button className="primary-button" onClick={() => { localStorage.clear() }}>Logout</button> </Link> */}
-
-            {/* <UpdateProfile /> */}
-            {/* <TopUpWallet/> */}
+            <div style={{ color: "green" }}>
+                <button onClick={handleClick} value={handleClick} type='button'>Edit Profile</button>
+            </div>
         </div>
     )
 }

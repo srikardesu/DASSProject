@@ -41,15 +41,9 @@ export default function App() {
                     <Route path="/weaver_edit_profile" component={ WeaverEditProfile } />
 
                 </Switch>
-                <Footer />
+              
             </div>
         </Router>
-    )
-}
-
-const Footer = () => {
-    return (
-        <p className="text-center" style={ FooterStyle }>A DASS Project - Team 43</p>
     )
 }
 

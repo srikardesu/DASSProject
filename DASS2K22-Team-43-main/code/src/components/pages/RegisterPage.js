@@ -65,6 +65,7 @@ export default class CreateUser extends Component {
                     })
                     document.getElementById("comments").innerHTML = "Success"
                     document.getElementById("comments").className = "alert alert-success alert-dismissible fade show"
+                    window.location.href = "/login"
                 }
                 else{
                     document.getElementById("comments").innerHTML = "Error"

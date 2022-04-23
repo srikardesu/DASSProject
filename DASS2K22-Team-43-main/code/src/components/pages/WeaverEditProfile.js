@@ -63,6 +63,7 @@ function WeaverEditProfile() {
                     <label>Name: </label>
                     <input type="text"
                         className="form-control"
+                        required="true"
                         value={name}
                         onChange={onChangeName}
                     />
@@ -72,6 +73,7 @@ function WeaverEditProfile() {
                     <label>Email: </label>
                     <input type="email"
                         className="form-control"
+                        required="true"
                         value={email}
                         onChange={onChangeEmail}
                     />
@@ -79,6 +81,7 @@ function WeaverEditProfile() {
                 <div className="form-group">
                     <label>Contact Number: </label>
                     <input type="text"
+                        required="true"
                         className="form-control"
                         value={contact}
                         onChange={onChangeContact}
@@ -88,6 +91,7 @@ function WeaverEditProfile() {
                     <label>Address: </label>
                     <input type="text"
                         className="form-control"
+                        required="true"
                         value={address}
                         onChange={onChangeAddress}
                     />

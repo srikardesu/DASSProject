@@ -11,6 +11,10 @@ export default function SpinnerProfile() {
     const [UserData, SetUserData] = useState("");
     // let UserEmail = localStorage.getItem('emailID');
 
+    const handleClick = () => {
+        window.location.href = "/spinner_edit_profile";
+    }
+
     useEffect(() => {
         console.log(localStorage.getItem("id"));
         axios
@@ -65,7 +69,7 @@ export default function SpinnerProfile() {
         <div className='box-shadow'>
             {/* <WeaverNav /> */}
             <div id="welcome-message">
-                Hello Customer {getName()}!
+                Hello {getName()}!!
             </div>
             <br />
             <div id="details">
@@ -85,10 +89,9 @@ export default function SpinnerProfile() {
                 <br />
             </div>
             <br />
-            {/* <Link to="/"> <button className="primary-button" onClick={() => { localStorage.clear() }}>Logout</button> </Link> */}
-
-            {/* <UpdateProfile /> */}
-            {/* <TopUpWallet/> */}
+            <div style={{ color: "green" }}>
+                <button onClick={handleClick} value={handleClick} type='button'>Edit Profile</button>
+            </div>
         </div>
     )
 }

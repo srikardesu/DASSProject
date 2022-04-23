@@ -69,6 +69,7 @@ function DyerEditProfile() {
             <div className="form-group">
                     <label>Name: </label>
                     <input type="text"
+                        required="true"
                         className="form-control"
                         value={name}
                         onChange={onChangeName}
@@ -79,6 +80,7 @@ function DyerEditProfile() {
                     <label>Email: </label>
                     <input type="email"
                         className="form-control"
+                        required="true"
                         value={email}
                         onChange={onChangeEmail}
                     />
@@ -87,6 +89,7 @@ function DyerEditProfile() {
                     <label>Contact Number: </label>
                     <input type="text"
                         className="form-control"
+                        required="true"
                         value={contact}
                         onChange={onChangeContact}
                     />
@@ -95,6 +98,7 @@ function DyerEditProfile() {
                     <label>Address: </label>
                     <input type="text"
                         className="form-control"
+                        required="true"
                         value={address}
                         onChange={onChangeAddress}
                     />
