@@ -24,15 +24,13 @@ router.route('/add').post((req, res) => {
     const completionDate = req.body.completionDate;
     const length = req.body.length;
     const Colours = req.body.Colours;
-    const Sold = req.body.Sold;
     
     const newFabric = new fabric({
         yarnPackageNumber,
         weaverID,
         completionDate,
         length,
-        Colours,
-        Sold
+        Colours
     });
 
     newFabric.save()
@@ -51,7 +49,6 @@ router.route('/updatefabric/:id').post((req, res) => {
             fabric.completionDate = req.body.completionDate ? req.body.completionDate : fabric.completionDate;
             fabric.length = req.body.length ? req.body.length : fabric.length;
             fabric.Colours = req.body.Colours ? req.body.Colours : fabric.Colours;
-            fabric.Sold = req.body.Sold ? req.body.Sold : fabric.Sold;
             
             fabric.save()
                 .then(() => res.json('Fabric updated Successfully!'))
