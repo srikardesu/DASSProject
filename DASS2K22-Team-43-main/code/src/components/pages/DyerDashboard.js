@@ -149,12 +149,12 @@ const UsersList = (props, onCancel) => {
                 .get("http://localhost:5000/yarnPackage/" + YarnID)
                 .then((response) => {
                     let newYarn = response.data;
-                    alert("Fetched the package dets. weaverID: "+newYarn.weaverID);
+                    // alert("Fetched the package dets. weaverID: "+newYarn.weaverID);
                     newYarn.currentStatus = "weaver";
                     axios.post("http://localhost:5000/yarnPackage/updatestock/" + YarnID, newYarn)
                         .then((response) => {
-                            alert("Updated YarnPackage Successfully");
-                            window.location.reload();
+                            // alert("Updated YarnPackage Successfully");
+                            // window.location.reload();
 
                             //create a fabric model
 
@@ -167,7 +167,7 @@ const UsersList = (props, onCancel) => {
                                 Sold: 0
                             }
 
-                            axios.post("http://localhost:5000/fabric/add", newFabric)
+                            axios.post("http://localhost:5000/fabric/add/", newFabric)
                                 .then((res) => {
                                     alert('added Fabric successfully');
                                     window.location.reload();
@@ -178,8 +178,8 @@ const UsersList = (props, onCancel) => {
                                     alert('error :(');
                                 }
                                 )
-                            window.location.reload();
-                            setOpen2(false);
+                            // window.location.reload();
+                            // setOpen2(false);
                         }
                         )
                         .catch((error) => {
