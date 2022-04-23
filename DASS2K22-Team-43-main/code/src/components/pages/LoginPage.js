@@ -119,7 +119,7 @@ export default function SignInPage() {
             <h2>Malkha Inventory Management Portal <br></br> Sign In</h2>
             <form action="/home">
                 <p>
-                    <label>Username or email address</label><br />
+                    <label>Email address</label><br />
                     <input type="text" id="email" name="first_name" required />
                 </p>
                 <p>

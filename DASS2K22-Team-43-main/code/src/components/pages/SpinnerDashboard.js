@@ -135,8 +135,14 @@ const UsersList = (props, onCancel) => {
         setOpen2(false);
     }
 
-    function shiftStock(x) {
-        axios
+    function shiftStock(x,dyerID) {
+        if (dyerID == "")
+        {
+            alert("No Dyer selected");
+        }
+        else
+        {
+            axios
             .get("http://localhost:5000/yarnPackage/" + x)
             .then((response) => {
                 let newYarn = response.data;
@@ -152,6 +158,7 @@ const UsersList = (props, onCancel) => {
                     }
                     );
             });
+        }
     }
 
     function handleEditClose(x) {
@@ -168,10 +175,13 @@ const UsersList = (props, onCancel) => {
                     cottonOrigin: cottonOrigin ? cottonOrigin : res.data.cottonOrigin,
                     yarnType: yarnType ? yarnType : res.data.yarnType,
                     dyerID: dyerID ? dyerID : res.data.dyerID,
-                    dyeingDate: dyeingDate ? dyeingDate : res.data.dyeingDate,
-                    colours: colours ? colours : res.data.colours,
-                    specialTreatment: specialTreatment ? specialTreatment : res.data.specialTreatment,
-                    currentStatus: currentStatus ? currentStatus : res.data.currentStatus,
+                    // dyeingDate: dyeingDate ? dyeingDate : res.data.dyeingDate,
+                    dyeingDate: res.data.dyeingDate,
+                    // colours: colours ? colours : res.data.colours,
+                    colours: res.data.colours,
+                    // specialTreatment: specialTreatment ? specialTreatment : res.data.specialTreatment,
+                    specialTreatment: res.data.specialTreatment,
+                    currentStatus: res.data.currentStatus,
                 };
                 // alert(x);
                 axios.post("http://localhost:5000/yarnPackage/updatestock/" + x, newYarn)
@@ -197,10 +207,10 @@ const UsersList = (props, onCancel) => {
             cottonOrigin: cottonOrigin,
             yarnType: yarnType,
             dyerID: dyerID,
-            dyeingDate: dyeingDate,
-            colours: colours,
-            specialTreatment: specialTreatment,
-            currentStatus: currentStatus,
+            dyeingDate: "",
+            colours: [],
+            specialTreatment: "",
+            currentStatus: "spinner"
         };
         // alert('here');
         axios.post("http://localhost:5000/yarnPackage/add/", newYarn)
@@ -290,10 +300,11 @@ const UsersList = (props, onCancel) => {
                                     <TableCell>CottonOrigin</TableCell>
                                     <TableCell>YarnType</TableCell>
                                     <TableCell>DyerID</TableCell>
-                                    <TableCell>Dyeing Date</TableCell>
+                                    {/* Not relevant in spinner dashboard */}
+                                    {/* <TableCell>Dyeing Date</TableCell>
                                     <TableCell>colours</TableCell>
                                     <TableCell>Special Treatment</TableCell>
-                                    <TableCell>current Status</TableCell>
+                                    <TableCell>current Status</TableCell> */}
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -307,13 +318,13 @@ const UsersList = (props, onCancel) => {
                                         <TableCell>{user.cottonOrigin}</TableCell>
                                         <TableCell>{user.yarnType}</TableCell>
                                         <TableCell>{user.dyerID}</TableCell>
-                                        <TableCell>{user.dyeingDate}</TableCell>
+                                        {/* <TableCell>{user.dyeingDate}</TableCell> */}
                                         {/* <TableCell>{user.colours}</TableCell> */}
-                                        <TableCell>{user.colours.map((hmm, ind) => (
+                                        {/* <TableCell>{user.colours.map((hmm, ind) => (
                                             <div>{hmm.ColourID} {hmm.Quantity}</div>
                                         ))}</TableCell>
                                         <TableCell>{user.specialTreatment}</TableCell>
-                                        <TableCell>{user.currentStatus}</TableCell>
+                                        <TableCell>{user.currentStatus}</TableCell> */}
                                         {/* <TableCell>{user.veg ? "veg" : "nonveg"}</TableCell> */}
                                         {/* <TableCell>{user.tags.map((hmm, ind) => (
                                             <div>{hmm}</div>
@@ -347,7 +358,7 @@ const UsersList = (props, onCancel) => {
                                                     // UpdateVendorName();
                                                     //console.log(user.add_on);
                                                     // const [form] = Form.useForm();
-                                                    shiftStock(user._id)
+                                                    shiftStock(user._id,user.dyerID)
                                                 }}
                                             >
                                                 Shift Stock
@@ -425,7 +436,8 @@ const UsersList = (props, onCancel) => {
                                                         fullWidth
                                                         variant="standard"
                                                     />
-                                                    <TextField
+                                                    {/* Not relevant in spinner dashboard */}
+                                                    {/* <TextField
                                                         autoFocus
                                                         margin="dense"
                                                         id="name"
@@ -468,7 +480,7 @@ const UsersList = (props, onCancel) => {
                                                         onChange={onChangecurrentStatus}
                                                         fullWidth
                                                         variant="standard"
-                                                    />
+                                                    /> */}
                                                 </DialogContent>
                                                 <DialogActions>
                                                     <Button onClick={() => handleClose(user._id)}>Cancel</Button>
@@ -553,7 +565,8 @@ const UsersList = (props, onCancel) => {
                                                     fullWidth
                                                     variant="standard"
                                                 />
-                                                <TextField
+                                                {/* These stuff aren't relevant to the Spinner */}
+                                                {/* <TextField
                                                     autoFocus
                                                     margin="dense"
                                                     id="name"
@@ -596,7 +609,7 @@ const UsersList = (props, onCancel) => {
                                                     onChange={onChangecurrentStatus}
                                                     fullWidth
                                                     variant="standard"
-                                                />
+                                                /> */}
                                             </DialogContent>
                                             <DialogActions>
                                                 <Button onClick={() => handleClose2()}>Cancel</Button>
