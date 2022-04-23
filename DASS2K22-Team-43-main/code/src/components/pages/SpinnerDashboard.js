@@ -51,6 +51,7 @@ const UsersList = (props, onCancel) => {
     const [open, setOpen] = useState({});
     const [open2, setOpen2] = useState(false);
     const [Yarn, setYarn] = useState([]);
+    const [weaverID, setweaverID] = useState("");
 
     useEffect(() => {
         axios
@@ -182,6 +183,7 @@ const UsersList = (props, onCancel) => {
                     // specialTreatment: specialTreatment ? specialTreatment : res.data.specialTreatment,
                     specialTreatment: res.data.specialTreatment,
                     currentStatus: res.data.currentStatus,
+                    weaverID: weaverID
                 };
                 // alert(x);
                 axios.post("http://localhost:5000/yarnPackage/updatestock/" + x, newYarn)
@@ -210,7 +212,8 @@ const UsersList = (props, onCancel) => {
             dyeingDate: "",
             colours: [],
             specialTreatment: "",
-            currentStatus: "spinner"
+            currentStatus: "spinner",
+            weaverID: weaverID
         };
         // alert('here');
         axios.post("http://localhost:5000/yarnPackage/add/", newYarn)

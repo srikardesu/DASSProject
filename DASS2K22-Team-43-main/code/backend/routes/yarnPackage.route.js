@@ -30,6 +30,7 @@ router.route('/add').post((req, res) => {
     const colours = req.body.colours
     const specialTreatment = req.body.specialTreatment;
     const currentStatus = req.body.currentStatus;
+    const weaverID = req.body.weaverID;
     
     const newYarn = new yarnPackage({
         spinnerID,
@@ -42,7 +43,8 @@ router.route('/add').post((req, res) => {
         dyeingDate,
         colours,
         specialTreatment,
-        currentStatus
+        currentStatus,
+        weaverID
     });
 
     newYarn.save()
@@ -65,8 +67,9 @@ router.route('/updatestock/:id').post((req, res) => {
             yarnPackage.dyeingDate = req.body.dyeingDate ? req.body.dyeingDate : yarnPackage.dyeingDate;
             // if(req.body.colours) 
             yarnPackage.colours = (req.body.colours);
-            yarnPackage.specialTreatment.concat(req.body.specialTreatment);
+            yarnPackage.specialTreatment = req.body.specialTreatment ? req.body.specialTreatment : yarnPackage.specialTreatment;
             yarnPackage.currentStatus = req.body.currentStatus ? req.body.currentStatus : yarnPackage.currentStatus;
+            yarnPackage.weaverID = req.body.weaverID ? req.body.weaverID : yarnPackage.weaverID;
             yarnPackage.save()
                 .then(() => res.json('Stock updated Successfully!'))
                 .catch(err => res.status(400).json('Error: ' + err));
@@ -90,6 +93,7 @@ router.route('/shiftstock/:id').post((req, res) => {
                 yarnPackage.colours.push(...req.body.colours);
             yarnPackage.specialTreatment.concat(req.body.specialTreatment);
             yarnPackage.currentStatus = req.body.currentStatus ? req.body.currentStatus : yarnPackage.currentStatus;
+            yarnPackage.weaverID = yarnPackage.weaverID;
             yarnPackage.save()
                 .then(() => res.json('Stock updated Successfully!'))
                 .catch(err => res.status(400).json('Error: ' + err));

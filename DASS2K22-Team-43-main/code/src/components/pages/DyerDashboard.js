@@ -37,17 +37,18 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 const UsersList = (props, onCancel) => {
     const [users, setUsers] = useState([]);
-    const [spinnerID, setspinID] = useState(localStorage.getItem("id"));
+    const [spinnerID, setspinID] = useState("");
     const [countNumber, setcountNumber] = useState(0);
     const [twistNumber, settwistNumber] = useState(0);
     const [spinDate, setspinDate] = useState("");
     const [cottonOrigin, setcottonOrigin] = useState("");
     const [yarnType, setyarnType] = useState("");
-    const [dyerID, setdyerID] = useState("");
+    const [dyerID, setdyerID] = useState(localStorage.getItem("id"));
     const [dyeingDate, setdyeingDate] = useState("");
     const [colours, setcolours] = useState([]);
     const [specialTreatment, setspecialTreatment] = useState("");
     const [currentStatus, setcurrentStatus] = useState("");
+    const [weaverID, setweaverID] = useState("");
     const [open, setOpen] = useState({});
     const [open2, setOpen2] = useState(false);
     const [Yarn, setYarn] = useState([]);
@@ -62,7 +63,7 @@ const UsersList = (props, onCancel) => {
                 // setUsers(response.data);
                 var obj = [];
                 for (var i = 0; i < response.data.length; i++) {
-                    if (response.data[i].spinnerID == localStorage.getItem("id") && response.data[i].currentStatus == "spinner") {
+                    if (response.data[i].dyerID == localStorage.getItem("id") && response.data[i].currentStatus == "dyer") {
                         obj.push(response.data[i]);
                     }
                 }
@@ -106,6 +107,10 @@ const UsersList = (props, onCancel) => {
     const onChangecurrentStatus = (event) => {
         setcurrentStatus(event.target.value);
     };
+    const onChangeweaverID = (event) => {
+        setweaverID(event.target.value);
+    };
+
 
     function handleClickOpen(x) {
         let v = {}
@@ -135,45 +140,90 @@ const UsersList = (props, onCancel) => {
         setOpen2(false);
     }
 
-    function shiftStock(x) {
-        axios
-            .get("http://localhost:5000/yarnPackage/" + x)
-            .then((response) => {
-                let newYarn = response.data;
-                newYarn.currentStatus = "dyer";
-                axios.post("http://localhost:5000/yarnPackage/updatestock/" + x, newYarn)
-                    .then((response) => {
-                        alert("Updated Successfully");
-                        window.location.reload();
-                    }
-                    )
-                    .catch((error) => {
-                        alert(error);
-                    }
-                    );
-            });
+    function shiftStock(x, weaverID) {
+        if (weaverID == "")
+            alert("No weaver ID selected")
+        else
+        {
+            axios
+                .get("http://localhost:5000/yarnPackage/" + x)
+                .then((response) => {
+                    let newYarn = response.data;
+                    newYarn.currentStatus = "weaver";
+                    axios.post("http://localhost:5000/yarnPackage/updatestock/" + x, newYarn)
+                        .then((response) => {
+                            alert("Updated Successfully");
+                            window.location.reload();
+                        }
+                        )
+                        .catch((error) => {
+                            alert(error);
+                        }
+                        );
+                });
+
+                //create a fabric model
+
+                const newFabric = {
+                    yarnPackageNumber: x,
+                    weaverID: weaverID,
+                    completionDate: "",
+                    length: "",
+                    Colours: []
+                }
+        }
     }
+
+    function handleEditClose2() {
+        const newYarn = {
+            spinnerID: spinnerID,
+            countNumber: countNumber,
+            twistNumber: twistNumber,
+            spinDate: spinDate,
+            cottonOrigin: cottonOrigin,
+            yarnType: yarnType,
+            dyerID: dyerID,
+            dyeingDate: "",
+            colours: [],
+            specialTreatment: "",
+            currentStatus: "spinner",
+            weaverID: weaverID
+        };
+        // alert('here');
+        axios.post("http://localhost:5000/yarnPackage/add/", newYarn)
+            .then((res) => {
+                alert('added successfully');
+                window.location.reload();
+            }
+            )
+            .catch((err) => {
+                console.log(err);
+                alert('error :(');
+            }
+            )
+        window.location.reload();
+        setOpen2(false);
+    };
+
 
     function handleEditClose(x) {
         axios.get("http://localhost:5000/yarnPackage/" + x)
             .then((res) => {
-                // let a = res.data.addons.addonsname
-                // console.log('hi');
-                // console.log(Tags);
                 const newYarn = {
-                    spinnerID: spinnerID ? spinnerID : res.data.spinnerID,
+                    spinnerID: res.data.spinnerID,
                     countNumber: countNumber ? countNumber : res.data.countNumber,
                     twistNumber: twistNumber ? twistNumber : res.data.twistNumber,
-                    spinDate: spinDate ? spinDate : res.data.spinDate,
-                    cottonOrigin: cottonOrigin ? cottonOrigin : res.data.cottonOrigin,
-                    yarnType: yarnType ? yarnType : res.data.yarnType,
-                    dyerID: dyerID ? dyerID : res.data.dyerID,
+                    spinDate: res.data.spinDate,
+                    cottonOrigin: res.data.cottonOrigin,
+                    yarnType: res.data.yarnType,
+                    dyerID: res.data.dyerID,
                     dyeingDate: dyeingDate ? dyeingDate : res.data.dyeingDate,
                     colours: colours ? colours : res.data.colours,
-                    specialTreatment: specialTreatment ? specialTreatment : res.data.specialTreatment,
-                    currentStatus: currentStatus ? currentStatus : res.data.currentStatus,
+                    specialTreatment: res.data.specialTreatment+" "+specialTreatment,
+                    currentStatus: res.data.currentStatus,
+                    weaverID: weaverID ? weaverID : res.data.weaverID
                 };
-                // alert(x);
+                alert(newYarn.specialTreatment);
                 axios.post("http://localhost:5000/yarnPackage/updatestock/" + x, newYarn)
                     .then((res) => {
                         alert('updated successfully');
@@ -188,6 +238,9 @@ const UsersList = (props, onCancel) => {
             })
     };
 
+// No Add Stock for Dyer
+
+/*
     function handleEditClose2() {
         const newYarn = {
             spinnerID: spinnerID,
@@ -217,43 +270,15 @@ const UsersList = (props, onCancel) => {
         window.location.reload();
         setOpen2(false);
     };
-
-
-    // I am tired we left here
-
-
-    // const [form] = Form.useForm();
+*/
     return (
         <div>
-            {/* {priceFunction} */}
-            {/* <Grid container>
-                <Grid item xs={12} md={9} lg={9}>
-                    <List component="nav" aria-label="mailbox folders">
-                        <TextField
-                            id="standard-basic"
-                            label="Search"
-                            fullWidth={true}
-                            InputProps={{
-                                endAdornment: (
-                                    <InputAdornment>
-                                        <IconButton>
-                                            <SearchIcon />
-                                        </IconButton>
-                                    </InputAdornment>
-                                ),
-                            }}
-                            onChange={customFunction}
-                        />
-                    </List>
-                </Grid>
-            </Grid> */}
             <Grid container>
-
                 <Grid item xs={12} md={9} lg={12}>
                     <Paper>
                         <Table size="small">
                             <TableHead>
-                                <Grid item xs={12} md={9} lg={12}>
+                                {/* <Grid item xs={12} md={9} lg={12}>
                                     <Button
                                         type="primary"
                                         onClick={() => {
@@ -269,103 +294,65 @@ const UsersList = (props, onCancel) => {
                                     >
                                         Add Stock
                                     </Button>
-                                </Grid>
+                                </Grid> */}
                                 <TableRow>
-                                    <TableCell> Spinner ID</TableCell>
-                                    <TableCell>
-                                        Count Number
-                                        {/* {" "} */}
-                                        {/* <Button onClick={sortRating}>
-                                            {sortName ? <ArrowDownwardIcon /> : <ArrowUpwardIcon />}
-                                        </Button> */}
-                                    </TableCell>
+                                    <TableCell>Yarn Package ID</TableCell>
+                                    <TableCell>Spinner ID</TableCell>
+                                    <TableCell>Count Number</TableCell>
                                     <TableCell>Twist Number</TableCell>
-                                    <TableCell>
-                                        Spin Date
-                                        {/* {" "} */}
-                                        {/* <Button onClick={sortPrice}>
-                                            {sortName1 ? <ArrowDownwardIcon /> : <ArrowUpwardIcon />}
-                                        </Button> */}
-                                    </TableCell>
+                                    <TableCell>Spin Date</TableCell>
                                     <TableCell>CottonOrigin</TableCell>
                                     <TableCell>YarnType</TableCell>
-                                    <TableCell>DyerID</TableCell>
+                                    {/* <TableCell>DyerID</TableCell> */}
                                     <TableCell>Dyeing Date</TableCell>
-                                    <TableCell>colours</TableCell>
+                                    {/* <TableCell>Colours</TableCell> */}
                                     <TableCell>Special Treatment</TableCell>
-                                    <TableCell>current Status</TableCell>
+                                    <TableCell>Weaver ID</TableCell>
+                                    {/* <TableCell>current Status</TableCell> */}
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                                 {users.map((user, ind) => (
                                     <TableRow key={ind}>
                                         {/* <TableCell>{ind}</TableCell> */}
+                                        <TableCell>{user._id}</TableCell>
                                         <TableCell>{user.spinnerID}</TableCell>
                                         <TableCell>{user.countNumber}</TableCell>
                                         <TableCell>{user.twistNumber}</TableCell>
                                         <TableCell>{user.spinDate}</TableCell>
                                         <TableCell>{user.cottonOrigin}</TableCell>
                                         <TableCell>{user.yarnType}</TableCell>
-                                        <TableCell>{user.dyerID}</TableCell>
+                                        {/* <TableCell>{user.dyerID}</TableCell> */}
                                         <TableCell>{user.dyeingDate}</TableCell>
                                         {/* <TableCell>{user.colours}</TableCell> */}
-                                        <TableCell>{user.colours.map((hmm, ind) => (
+                                        {/* <TableCell>{user.colours.map((hmm, ind) => (
                                             <div>{hmm.ColourID} {hmm.Quantity}</div>
-                                        ))}</TableCell>
+                                        ))}</TableCell> */}
                                         <TableCell>{user.specialTreatment}</TableCell>
-                                        <TableCell>{user.currentStatus}</TableCell>
-                                        {/* <TableCell>{user.veg ? "veg" : "nonveg"}</TableCell> */}
-                                        {/* <TableCell>{user.tags.map((hmm, ind) => (
-                                            <div>{hmm}</div>
-                                        ))}</TableCell>
-                                        <TableCell><Button onClick={() => FavoriteAdd(user.name)}>
-                                            Add
-                                        </Button></TableCell> */}
+                                        <TableCell>{user.weaverID}</TableCell>
+                                        {/* <TableCell>{user.currentStatus}</TableCell> */}
                                         <TableCell>
                                             <Button
                                                 type="primary"
-                                                onClick={() => {
-                                                    // setVisible(true);
-                                                    // setFood(user.add_on);
-                                                    // setCost(user.price);
-                                                    // setItem(user);
-                                                    // UpdateVendorName();
-                                                    //console.log(user.add_on);
-                                                    // const [form] = Form.useForm();
-                                                    handleClickOpen(user._id)
-                                                }}
+                                                onClick={() => {handleClickOpen(user._id)}}
                                             >
                                                 Update Stock
                                             </Button>
                                             <Button
                                                 type="primary"
-                                                onClick={() => {
-                                                    // setVisible(true);
-                                                    // setFood(user.add_on);
-                                                    // setCost(user.price);
-                                                    // setItem(user);
-                                                    // UpdateVendorName();
-                                                    //console.log(user.add_on);
-                                                    // const [form] = Form.useForm();
-                                                    shiftStock(user._id)
-                                                }}
+                                                onClick={() => {shiftStock(user._id, user.weaverID)}}
                                             >
                                                 Shift Stock
                                             </Button>
                                             <Dialog open={open[user._id]} onClose={() => handleClose(user._id)}>
                                                 <DialogTitle>Update Stock</DialogTitle>
                                                 <DialogContent>
-                                                    {/* <DialogContentText>
-                                        To subscribe to this website, please enter your email address here. We
-                                        will send updates occasionally.
-                                    </DialogContentText> */}
                                                     <TextField
                                                         autoFocus
                                                         margin="dense"
                                                         id="name"
                                                         label="Count Number"
                                                         type="text"
-                                                        // value={el.Vendor_email}
                                                         onChange={onChangecountNumber}
                                                         fullWidth
                                                         variant="standard"
@@ -376,23 +363,21 @@ const UsersList = (props, onCancel) => {
                                                         id="name"
                                                         label="twist Number"
                                                         type="text"
-                                                        // value={el.Vendor_email}
                                                         onChange={onChangetwistNumber}
                                                         fullWidth
                                                         variant="standard"
                                                     />
-                                                    <TextField
+                                                    {/* <TextField
                                                         autoFocus
                                                         margin="dense"
                                                         id="name"
                                                         label="spin Date"
                                                         type="text"
-                                                        // value={el.Vendor_email}
                                                         onChange={onChangespinDate}
                                                         fullWidth
                                                         variant="standard"
-                                                    />
-                                                    <TextField
+                                                    /> */}
+                                                    {/* <TextField
                                                         autoFocus
                                                         margin="dense"
                                                         id="name"
@@ -402,8 +387,8 @@ const UsersList = (props, onCancel) => {
                                                         onChange={onChangecottonOrigin}
                                                         fullWidth
                                                         variant="standard"
-                                                    />
-                                                    <TextField
+                                                    /> */}
+                                                    {/* <TextField
                                                         autoFocus
                                                         margin="dense"
                                                         id="name"
@@ -413,8 +398,8 @@ const UsersList = (props, onCancel) => {
                                                         onChange={onChangeyarnType}
                                                         fullWidth
                                                         variant="standard"
-                                                    />
-                                                    <TextField
+                                                    /> */}
+                                                    {/* <TextField
                                                         autoFocus
                                                         margin="dense"
                                                         id="name"
@@ -424,41 +409,38 @@ const UsersList = (props, onCancel) => {
                                                         onChange={onChangedyerID}
                                                         fullWidth
                                                         variant="standard"
-                                                    />
+                                                    /> */}
                                                     <TextField
                                                         autoFocus
                                                         margin="dense"
                                                         id="name"
                                                         label="dyeing Date"
                                                         type="text"
-                                                        // value={el.Vendor_email}
                                                         onChange={onChangedyeingDate}
                                                         fullWidth
                                                         variant="standard"
                                                     />
-                                                    <TextField
+                                                    {/* <TextField
                                                         autoFocus
                                                         margin="dense"
                                                         id="name"
                                                         label="colours"
                                                         type="email"
-                                                        // value={el.Vendor_email}
                                                         onChange={onChangecolours}
                                                         fullWidth
                                                         variant="standard"
-                                                    />
+                                                    /> */}
                                                     <TextField
                                                         autoFocus
                                                         margin="dense"
                                                         id="name"
                                                         label="special Treatment"
                                                         type="email"
-                                                        // value={el.Vendor_email}
                                                         onChange={onChangespecialTreatment}
                                                         fullWidth
                                                         variant="standard"
                                                     />
-                                                    <TextField
+                                                    {/* <TextField
                                                         autoFocus
                                                         margin="dense"
                                                         id="name"
@@ -466,6 +448,16 @@ const UsersList = (props, onCancel) => {
                                                         type="email"
                                                         // value={el.Vendor_email}
                                                         onChange={onChangecurrentStatus}
+                                                        fullWidth
+                                                        variant="standard"
+                                                    /> */}
+                                                    <TextField
+                                                        autoFocus
+                                                        margin="dense"
+                                                        id="name"
+                                                        label="Weaver ID"
+                                                        type="email"
+                                                        onChange={onChangeweaverID}
                                                         fullWidth
                                                         variant="standard"
                                                     />
@@ -478,15 +470,11 @@ const UsersList = (props, onCancel) => {
                                         </TableCell>
                                     </TableRow>
                                 ))}
-                                <TableRow>
+                                {/* <TableRow>
                                     <TableCell>
                                         <Dialog open={open2} onClose={handleClose2}>
                                             <DialogTitle>Add Stock</DialogTitle>
                                             <DialogContent>
-                                                {/* <DialogContentText>
-                                        To subscribe to this website, please enter your email address here. We
-                                        will send updates occasionally.
-                                    </DialogContentText> */}
                                                 <TextField
                                                     autoFocus
                                                     margin="dense"
@@ -604,7 +592,7 @@ const UsersList = (props, onCancel) => {
                                             </DialogActions>
                                         </Dialog>
                                     </TableCell>
-                                </TableRow>
+                                </TableRow> */}
                             </TableBody>
                         </Table>
                     </Paper>

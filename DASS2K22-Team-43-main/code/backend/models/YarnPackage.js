@@ -17,7 +17,8 @@ const yarnPackageSchema = new Schema({
             Quantity: {type: Number}
         }],
     specialTreatment: {type: String},
-    currentStatus: {type: String}       // With Spinner or dyer or weaver?
+    currentStatus: {type: String},       // With Spinner or dyer or weaver?
+    weaverID: {type: String}
 })
 
 const yarnPackage = mongoose.model('yarnPackage', yarnPackageSchema);

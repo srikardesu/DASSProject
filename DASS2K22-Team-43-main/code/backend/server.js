@@ -24,6 +24,7 @@ const dyerRouter = require('./routes/dyer.route');
 const loginAuthentication = require('./routes/login.route')
 const register = require('./routes/register.route')
 const YarnPackage = require('./routes/yarnPackage.route');
+const Fabric = require('./routes/fabric.route');
 
 app.use('/login', loginAuthentication);
 app.use('/weaver', weaverRouter);
@@ -31,6 +32,7 @@ app.use('/spinner', spinnerRouter);
 app.use('/dyer', dyerRouter);
 app.use('/register', register)
 app.use('/yarnPackage', YarnPackage);
+app.use('/fabric', Fabric);
 
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);
