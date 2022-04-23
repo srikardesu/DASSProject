@@ -17,6 +17,8 @@ import WeaverDashboard from './components/pages/WeaverDashboard'
 import DyerDashboard from './components/pages/DyerDashboard'
 import SpinnerDashboard from './components/pages/SpinnerDashboard'
 import HelpPage from './components/pages/HelpPage'
+import DisplayProductDetails from './components/pages/DisplayProductDetails'
+import FabricDetails from './components/pages/FabricDetails'
 
 import './App.css'
 
@@ -41,6 +43,8 @@ export default function App() {
                     <Route path="/dyer_edit_profile" component={ DyerEditProfile } />
                     <Route path="/weaver_edit_profile" component={ WeaverEditProfile } />
                     <Route path="/help" component={ HelpPage } />
+                    <Route path="/display_product_details" component={DisplayProductDetails} />
+                    <Route path="/fabric_details" component={FabricDetails} />
 
                 </Switch>
               
