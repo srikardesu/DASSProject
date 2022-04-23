@@ -101,6 +101,16 @@ router.route('/shiftstock/:id').post((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
+// Delete YarnPackage (For testing purpose):
+
+router.route('/deletestock/:id').delete((req,res) => {
+    yarnPackage.deleteMany({_id: req.params.id})
+        .then(deletedEntry => {
+            res.json('Yarn Package deleted!')
+        })
+        .catch(err => {
+            res.status(400).json('Error: ' + err);
+        });
+});
 
 module.exports = router;
-

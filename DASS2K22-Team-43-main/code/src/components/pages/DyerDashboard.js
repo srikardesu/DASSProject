@@ -140,71 +140,54 @@ const UsersList = (props, onCancel) => {
         setOpen2(false);
     }
 
-    function shiftStock(x, weaverID) {
+    function shiftStock(YarnID, weaverID) {
         if (weaverID == "")
             alert("No weaver ID selected")
         else
         {
             axios
-                .get("http://localhost:5000/yarnPackage/" + x)
+                .get("http://localhost:5000/yarnPackage/" + YarnID)
                 .then((response) => {
                     let newYarn = response.data;
+                    alert("Fetched the package dets. weaverID: "+newYarn.weaverID);
                     newYarn.currentStatus = "weaver";
-                    axios.post("http://localhost:5000/yarnPackage/updatestock/" + x, newYarn)
+                    axios.post("http://localhost:5000/yarnPackage/updatestock/" + YarnID, newYarn)
                         .then((response) => {
-                            alert("Updated Successfully");
+                            alert("Updated YarnPackage Successfully");
                             window.location.reload();
+
+                            //create a fabric model
+
+                            const newFabric = {
+                                yarnPackageNumber: YarnID,
+                                weaverID: weaverID,
+                                completionDate: "",
+                                length: "",
+                                Colours: []
+                            }
+
+                            axios.post("http://localhost:5000/fabric/add", newFabric)
+                                .then((res) => {
+                                    alert('added Fabric successfully');
+                                    window.location.reload();
+                                }
+                                )
+                                .catch((err) => {
+                                    console.log(err);
+                                    alert('error :(');
+                                }
+                                )
+                            window.location.reload();
+                            setOpen2(false);
                         }
                         )
                         .catch((error) => {
-                            alert(error);
+                            alert("Yarn Update unsuccessful"+error);
                         }
                         );
                 });
-
-                //create a fabric model
-
-                const newFabric = {
-                    yarnPackageNumber: x,
-                    weaverID: weaverID,
-                    completionDate: "",
-                    length: "",
-                    Colours: []
-                }
         }
     }
-
-    function handleEditClose2() {
-        const newYarn = {
-            spinnerID: spinnerID,
-            countNumber: countNumber,
-            twistNumber: twistNumber,
-            spinDate: spinDate,
-            cottonOrigin: cottonOrigin,
-            yarnType: yarnType,
-            dyerID: dyerID,
-            dyeingDate: "",
-            colours: [],
-            specialTreatment: "",
-            currentStatus: "spinner",
-            weaverID: weaverID
-        };
-        // alert('here');
-        axios.post("http://localhost:5000/yarnPackage/add/", newYarn)
-            .then((res) => {
-                alert('added successfully');
-                window.location.reload();
-            }
-            )
-            .catch((err) => {
-                console.log(err);
-                alert('error :(');
-            }
-            )
-        window.location.reload();
-        setOpen2(false);
-    };
-
 
     function handleEditClose(x) {
         axios.get("http://localhost:5000/yarnPackage/" + x)
@@ -223,7 +206,6 @@ const UsersList = (props, onCancel) => {
                     currentStatus: res.data.currentStatus,
                     weaverID: weaverID ? weaverID : res.data.weaverID
                 };
-                alert(newYarn.specialTreatment);
                 axios.post("http://localhost:5000/yarnPackage/updatestock/" + x, newYarn)
                     .then((res) => {
                         alert('updated successfully');

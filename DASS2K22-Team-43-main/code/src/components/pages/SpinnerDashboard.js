@@ -284,7 +284,7 @@ const UsersList = (props, onCancel) => {
                                     </Button>
                                 </Grid>
                                 <TableRow>
-                                    <TableCell> Spinner ID</TableCell>
+                                    <TableCell> Yarn Package ID</TableCell>
                                     <TableCell>
                                         Count Number
                                         {/* {" "} */}
@@ -314,7 +314,7 @@ const UsersList = (props, onCancel) => {
                                 {users.map((user, ind) => (
                                     <TableRow key={ind}>
                                         {/* <TableCell>{ind}</TableCell> */}
-                                        <TableCell>{user.spinnerID}</TableCell>
+                                        <TableCell>{user._id}</TableCell>
                                         <TableCell>{user.countNumber}</TableCell>
                                         <TableCell>{user.twistNumber}</TableCell>
                                         <TableCell>{user.spinDate}</TableCell>
