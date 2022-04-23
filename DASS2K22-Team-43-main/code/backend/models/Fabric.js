@@ -10,7 +10,8 @@ const fabricSchema = new Schema({
     Colours: [{
         ColourID: {type: String},
         Quantity: {type: Number}
-    }]
+    }],
+    Sold: {type: Boolean}
 })
 
 const fabric = mongoose.model('fabric', fabricSchema);

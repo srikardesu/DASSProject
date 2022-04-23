@@ -163,7 +163,8 @@ const UsersList = (props, onCancel) => {
                                 weaverID: weaverID,
                                 completionDate: "",
                                 length: "",
-                                Colours: []
+                                Colours: [],
+                                Sold: 0
                             }
 
                             axios.post("http://localhost:5000/fabric/add", newFabric)
