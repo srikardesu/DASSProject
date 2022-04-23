@@ -35,6 +35,9 @@ export default class Navbar extends Component {
                         {localStorage.getItem("isloggedin") == "yes" && <li className="navbar-item">
                             <Link to="/" className="nav-link" onClick={() => { localStorage.clear() }}>Logout</Link>
                         </li>}
+                        {localStorage.getItem("isloggedin") == "yes" && <li className="navbar-item">
+                            <Link to="/help" className="nav-link" >Help</Link>
+                        </li>}
                         {/* {localStorage.getItem("isloggedin") == "yes" && localStorage.getItem("type") == "Buyer" && <li className="navbar-item">
                             <Link to="/buyerdashboard" className="nav-link">Buyer Dashboard</Link>
                         </li>}
