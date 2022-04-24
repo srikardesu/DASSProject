@@ -83,6 +83,7 @@ const onSubmit = (event) => {
                     if (response.data._id === localStorage.getItem("id")) {
                         localStorage.setItem("type", "spinner");
                         window.location.replace('/spinner_profile');
+                        // response.status === 200;
                     }
                 })
                 //     // .catch((error) => {

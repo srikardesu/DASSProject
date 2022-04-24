@@ -1,0 +1,23 @@
+{
+    "name": "backend",
+    "version": "1.0.0",
+    "description": "",
+    "main": "server.js",
+    "scripts": {
+        "test": "cross-env NODE_ENV=test jest --testTimeout=60000 --forceExit",
+        "start": "node server.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "cors": "^2.8.5",
+        "dotenv": "^14.3.2",
+        "express": "^4.17.2",
+        "jest": "^27.5.1",
+        "mongoose": "^6.1.8",
+        "multer": "^1.4.4",
+        "nodemailer": "^6.7.2",
+        "supertest": "^6.2.2"
+    }
+}

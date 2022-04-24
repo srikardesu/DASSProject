@@ -11,7 +11,7 @@ app.use(cors());
 app.use(express.json());
 
 const uri = process.env.ATLAS_URI;
-mongoose.connect(uri, { }
+mongoose.connect(uri, {}
 );
 const connection = mongoose.connection;
 connection.once('open', () => {
@@ -35,5 +35,7 @@ app.use('/yarnPackage', YarnPackage);
 app.use('/fabric', Fabric);
 
 app.listen(port, () => {
-    console.log(`Server is running on port: ${port}`);
+  console.log(`Server is running on port: ${port}`);
 });
+
+module.exports = app
