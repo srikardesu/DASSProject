@@ -12,7 +12,7 @@ router.route('/').get((req, res) => {
 // Returns Fabric details by ID
 router.route('/:id').get((req, res) => {
     // console.log('here');
-    fabric.findById(req.params.id)
+    fabric.findOne({_id: req.params.id})
         .then(fabric => res.json(fabric))
         .catch(err => res.status(400).json('Error: ' + err));
 });
